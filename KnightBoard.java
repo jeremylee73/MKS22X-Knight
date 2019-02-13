@@ -13,7 +13,28 @@ public class KnightBoard{
   }
 
   public String toString(){
-    return "";
+    String ans = "";
+    for (int row=0; row<maxRows; row++){
+      for (int col=0; col<maxCols; col++){
+        if (maxRows*maxCols > 9){
+          if (board[row][col] == 0){
+            ans += "_ ";
+          } else if (board[row][col] > 9){
+            ans += " "+ board[row][col] + " ";
+          } else {
+            ans += board[row][col] + " ";
+          }
+        } else {
+          if (board[row][col] == 0){
+            ans += "_ ";
+          } else {
+            ans += board[row][col] + " ";
+          }
+        }
+      }
+      ans += "\n";
+    }
+    return ans;
   }
 
   public boolean solve(int startingRow, int startingCol){
