@@ -18,8 +18,8 @@ public class KnightBoard{
       for (int col=0; col<maxCols; col++){
         if (maxRows*maxCols > 9){
           if (board[row][col] == 0){
-            ans += "_ ";
-          } else if (board[row][col] < 9){
+            ans += " _ ";
+          } else if (board[row][col] < 10){
             ans += " "+ board[row][col] + " ";
           } else {
             ans += board[row][col] + " ";
@@ -63,34 +63,58 @@ public class KnightBoard{
     if (level == maxCols * maxRows){
       return true;
     }
+    int[][] blocks = new int[8][2];
+    int index = 0;
     if (row < maxRows - 2 && col > 0 && board[row+2][col-1] == 0){
       board[row+2][col-1] = level;
-      return solveH(row+2, col-1, level+1);
+      blocks[index][0] = row+2;
+      blocks[index][1] = col-1;
+      index++;
     } else if (row < maxRows - 2 && col < maxCols - 1 && board[row+2][col+1] == 0){
       board[row+2][col+1] = level;
-      return solveH(row+2, col+1, level+1);
+      blocks[index][0] = row+2;
+      blocks[index][1] = col+1;
+      index++;
     } else if (row < maxRows - 1 && col < maxCols - 2 && board[row+1][col+2] == 0){
       board[row+1][col+2] = level;
-      return solveH(row+1, col+2, level+1);
+      blocks[index][0] = row+1;
+      blocks[index][1] = col+2;
+      index++;
     } else if (row > 0 && col < maxCols - 2 && board[row-1][col+2] == 0){
       board[row-1][col+2] = level;
-      return solveH(row-1, col+2, level+1);
+      blocks[index][0] = row-1;
+      blocks[index][1] = col+2;
+      index++;
     } else if (row > 1 && col > 0 && board[row-2][col-1] == 0){
       board[row-2][col-1] = level;
-      return solveH(row-2, col-1, level+1);
+      blocks[index][0] = row-2;
+      blocks[index][1] = col-1;
+      index++;
     } else if (row > 1 && col < maxCols - 1 && board[row-2][col+1] == 0){
       board[row-2][col+1] = level;
-      return solveH(row-2, col+1, level+1);
+      blocks[index][0] = row-2;
+      blocks[index][1] = col+1;
+      index++;
     } else if (row > 0 && col > 1 && board[row-1][col-2] == 0){
       board[row-1][col-2] = level;
-      return solveH(row-1, col-2, level+1);
+      blocks[index][0] = row-1;
+      blocks[index][1] = col-2;
+      index++;
     } else if (row < maxRows - 1 && col > 1 && board[row+1][col-2] == 0){
       board[row+1][col-2] = level;
-      return solveH(row+1, col-2, level+1);
+      blocks[index][0] = row+1;
+      blocks[index][1] = col-2;
+      index++;
     } else {
       clear();
       return false;
     }
+    for (int i=0; i<8; i++){
+      if (solveH(blocks[i][0], blocks[i][1], level+1)){
+        return true;
+      }
+    }
+    return false;
   }
   // level is the # of the knight
 
