@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class KnightBoard{
   int[][] board;
   int maxRows;
@@ -63,54 +64,79 @@ public class KnightBoard{
     if (level == maxCols * maxRows){
       return true;
     }
-    int[][] blocks = new int[8][2];
+    ArrayList<int[]> blocks = new ArrayList<int[]>();
     int index = 0;
     if (row < maxRows - 2 && col > 0 && board[row+2][col-1] == 0){
       board[row+2][col-1] = level;
-      blocks[index][0] = row+2;
-      blocks[index][1] = col-1;
+      int[] move = new int[2];
+      move[0] = row+2;
+      move[1] = col-1;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else if (row < maxRows - 2 && col < maxCols - 1 && board[row+2][col+1] == 0){
       board[row+2][col+1] = level;
-      blocks[index][0] = row+2;
-      blocks[index][1] = col+1;
+      int[] move = new int[2];
+      move[0] = row+2;
+      move[1] = col+1;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else if (row < maxRows - 1 && col < maxCols - 2 && board[row+1][col+2] == 0){
       board[row+1][col+2] = level;
-      blocks[index][0] = row+1;
-      blocks[index][1] = col+2;
+      int[] move = new int[2];
+      move[0] = row+1;
+      move[1] = col+2;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else if (row > 0 && col < maxCols - 2 && board[row-1][col+2] == 0){
       board[row-1][col+2] = level;
-      blocks[index][0] = row-1;
-      blocks[index][1] = col+2;
+      int[] move = new int[2];
+      move[0] = row-1;
+      move[1] = col+2;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else if (row > 1 && col > 0 && board[row-2][col-1] == 0){
       board[row-2][col-1] = level;
-      blocks[index][0] = row-2;
-      blocks[index][1] = col-1;
+      int[] move = new int[2];
+      move[0] = row-2;
+      move[1] = col-1;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else if (row > 1 && col < maxCols - 1 && board[row-2][col+1] == 0){
       board[row-2][col+1] = level;
-      blocks[index][0] = row-2;
-      blocks[index][1] = col+1;
+      int[] move = new int[2];
+      move[0] = row-2;
+      move[1] = col+1;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else if (row > 0 && col > 1 && board[row-1][col-2] == 0){
       board[row-1][col-2] = level;
-      blocks[index][0] = row-1;
-      blocks[index][1] = col-2;
+      int[] move = new int[2];
+      move[0] = row-1;
+      move[1] = col-2;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else if (row < maxRows - 1 && col > 1 && board[row+1][col-2] == 0){
       board[row+1][col-2] = level;
-      blocks[index][0] = row+1;
-      blocks[index][1] = col-2;
+      int[] move = new int[2];
+      move[0] = row+1;
+      move[1] = col-2;
+      blocks.add(move);
+      System.out.println(toString());
       index++;
     } else {
-      clear();
-      return false;
+      board[row][col] = 0;
+      System.out.println("End");
     }
-    for (int i=0; i<8; i++){
-      if (solveH(blocks[i][0], blocks[i][1], level+1)){
+    for (int i=0; i<blocks.size(); i++){
+      if (solveH(blocks.get(i)[0], blocks.get(i)[1], level+1)){
+        System.out.println(toString());
         return true;
       }
     }
