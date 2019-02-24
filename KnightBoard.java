@@ -3,6 +3,7 @@ public class KnightBoard{
   int[][] board;
   int maxRows;
   int maxCols;
+  int[][] moves;
 
   public KnightBoard(int startingRows,int startingCols){
     if (startingRows < 0 || startingCols < 0){
@@ -11,6 +12,7 @@ public class KnightBoard{
     board = new int[startingRows][startingCols];
     maxRows = startingRows;
     maxCols = startingCols;
+    moves = new int[][] {{1,2},{1,-2},{-1,2},{-1,-2},{2,1},{2, -1},{-2,1},{-2,-1}};
   }
 
   public String toString(){
@@ -60,89 +62,101 @@ public class KnightBoard{
     return solveH(startingRow, startingCol, 1);
   }
 
-  private boolean solveH(int row ,int col, int level){
-    if (level == maxCols * maxRows){
-      return true;
-    }
+  private ArrayList<int[]> storeMoves(int row, int col, int level){
     ArrayList<int[]> blocks = new ArrayList<int[]>();
     int index = 0;
     if (row < maxRows - 2 && col > 0 && board[row+2][col-1] == 0){
-      board[row+2][col-1] = level;
       int[] move = new int[2];
       move[0] = row+2;
       move[1] = col-1;
       blocks.add(move);
-      System.out.println(toString());
       index++;
     } else if (row < maxRows - 2 && col < maxCols - 1 && board[row+2][col+1] == 0){
-      board[row+2][col+1] = level;
       int[] move = new int[2];
       move[0] = row+2;
       move[1] = col+1;
       blocks.add(move);
-      System.out.println(toString());
       index++;
     } else if (row < maxRows - 1 && col < maxCols - 2 && board[row+1][col+2] == 0){
-      board[row+1][col+2] = level;
       int[] move = new int[2];
       move[0] = row+1;
       move[1] = col+2;
       blocks.add(move);
-      System.out.println(toString());
       index++;
     } else if (row > 0 && col < maxCols - 2 && board[row-1][col+2] == 0){
-      board[row-1][col+2] = level;
       int[] move = new int[2];
       move[0] = row-1;
       move[1] = col+2;
       blocks.add(move);
-      System.out.println(toString());
       index++;
     } else if (row > 1 && col > 0 && board[row-2][col-1] == 0){
-      board[row-2][col-1] = level;
       int[] move = new int[2];
       move[0] = row-2;
       move[1] = col-1;
       blocks.add(move);
-      System.out.println(toString());
       index++;
     } else if (row > 1 && col < maxCols - 1 && board[row-2][col+1] == 0){
-      board[row-2][col+1] = level;
       int[] move = new int[2];
       move[0] = row-2;
       move[1] = col+1;
       blocks.add(move);
-      System.out.println(toString());
       index++;
     } else if (row > 0 && col > 1 && board[row-1][col-2] == 0){
-      board[row-1][col-2] = level;
       int[] move = new int[2];
       move[0] = row-1;
       move[1] = col-2;
       blocks.add(move);
-      System.out.println(toString());
       index++;
     } else if (row < maxRows - 1 && col > 1 && board[row+1][col-2] == 0){
-      board[row+1][col-2] = level;
       int[] move = new int[2];
       move[0] = row+1;
       move[1] = col-2;
       blocks.add(move);
-      System.out.println(toString());
       index++;
-    } else {
-      board[row][col] = 0;
-      System.out.println("End");
     }
+    return blocks;
+  }
+
+  private boolean solveH(int row ,int col, int level){
+    System.out.println(toString());
+    if (level > maxCols * maxRows){
+      return true;
+    }
+    if (board[row][col] != 0 || row < 0 || col < 0 || row >= board.length || col >= board[row].length){
+      return false;
+    }
+    ArrayList<int[]> blocks = storeMoves(row, col, level);
     for (int i=0; i<blocks.size(); i++){
+      board[row][col] = level;
       if (solveH(blocks.get(i)[0], blocks.get(i)[1], level+1)){
-        System.out.println(toString());
         return true;
       }
     }
+    board[row][col] = 0;
     return false;
   }
-  // level is the # of the knight
+
+  public int findPastRow(int level){
+    for (int row=0; row<board.length; row++){
+      for (int col=0; col<board[row].length; col++){
+        if (board[row][col] == level-1){
+          return row;
+        }
+      }
+    }
+    return -1;
+  }
+
+  public int findPastCol(int level){
+    for (int row=0; row<board.length; row++){
+      for (int col=0; col<board[row].length; col++){
+        if (board[row][col] == level-1){
+          return col;
+        }
+      }
+    }
+    return -1;
+  }
 
   public int countSolutions(int startingRow, int startingCol){
     if (startingRow < 0 || startingCol < 0 || startingRow > maxRows || startingCol > maxCols){
