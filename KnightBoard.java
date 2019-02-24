@@ -122,7 +122,7 @@ public class KnightBoard{
     if (level > maxCols * maxRows){
       return true;
     }
-    if (board[row][col] != 0 || row < 0 || col < 0 || row >= board.length || col >= board[row].length){
+    if (board[row][col] != 0){
       return false;
     }
     ArrayList<int[]> blocks = storeMoves(row, col, level);
@@ -131,8 +131,8 @@ public class KnightBoard{
       if (solveH(blocks.get(i)[0], blocks.get(i)[1], level+1)){
         return true;
       }
+      board[row][col] = 0;
     }
-    board[row][col] = 0;
     return false;
   }
 
