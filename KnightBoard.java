@@ -3,7 +3,7 @@ public class KnightBoard{
   int[][] board;
   int maxRows;
   int maxCols;
-  int[][] moves;
+  int numSolutions;
 
   public KnightBoard(int startingRows,int startingCols){
     if (startingRows < 0 || startingCols < 0){
@@ -48,6 +48,7 @@ public class KnightBoard{
   }
 
   public boolean solve(int startingRow, int startingCol){
+    clear();
     if (startingRow < 0 || startingCol < 0 || startingRow > maxRows || startingCol > maxCols){
       throw new IllegalArgumentException();
     }
@@ -124,7 +125,6 @@ public class KnightBoard{
   }
 
   private boolean solveH(int row ,int col, int level){
-    System.out.println(toString());
     if (level == maxCols * maxRows){
       board[row][col] = level;
       return true;
@@ -144,6 +144,7 @@ public class KnightBoard{
   }
 
   public int countSolutions(int startingRow, int startingCol){
+    clear();
     if (startingRow < 0 || startingCol < 0 || startingRow > maxRows || startingCol > maxCols){
       throw new IllegalArgumentException();
     }
@@ -154,6 +155,21 @@ public class KnightBoard{
         }
       }
     }
-    return 0;
+    numSolutions = 0;
+    cSH(startingRow, startingCol, 1);
+    return numSolutions;
+  }
+
+  public void cSH(int row, int col, int level){
+    System.out.println(toString());
+    if (level == maxCols * maxRows){
+      numSolutions++;
+    }
+    ArrayList<int[]> blocks = storeMoves(row, col, level);
+    for (int i=0; i<blocks.size(); i++){
+      board[row][col] = level;
+      cSH(blocks.get(i)[0], blocks.get(i)[1], level+1);
+      board[row][col] = 0;
+    }
   }
 }
