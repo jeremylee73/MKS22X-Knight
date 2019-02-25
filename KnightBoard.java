@@ -143,28 +143,6 @@ public class KnightBoard{
     return false;
   }
 
-  public int findPastRow(int level){
-    for (int row=0; row<board.length; row++){
-      for (int col=0; col<board[row].length; col++){
-        if (board[row][col] == level-1){
-          return row;
-        }
-      }
-    }
-    return -1;
-  }
-
-  public int findPastCol(int level){
-    for (int row=0; row<board.length; row++){
-      for (int col=0; col<board[row].length; col++){
-        if (board[row][col] == level-1){
-          return col;
-        }
-      }
-    }
-    return -1;
-  }
-
   public int countSolutions(int startingRow, int startingCol){
     if (startingRow < 0 || startingCol < 0 || startingRow > maxRows || startingCol > maxCols){
       throw new IllegalArgumentException();
