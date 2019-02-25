@@ -12,7 +12,6 @@ public class KnightBoard{
     board = new int[startingRows][startingCols];
     maxRows = startingRows;
     maxCols = startingCols;
-    moves = new int[][] {{1,2},{1,-2},{-1,2},{-1,-2},{2,1},{2, -1},{-2,1},{-2,-1}};
   }
 
   public String toString(){
@@ -71,43 +70,50 @@ public class KnightBoard{
       move[1] = col-1;
       blocks.add(move);
       index++;
-    } else if (row < maxRows - 2 && col < maxCols - 1 && board[row+2][col+1] == 0){
+    }
+    if (row < maxRows - 2 && col < maxCols - 1 && board[row+2][col+1] == 0){
       int[] move = new int[2];
       move[0] = row+2;
       move[1] = col+1;
       blocks.add(move);
       index++;
-    } else if (row < maxRows - 1 && col < maxCols - 2 && board[row+1][col+2] == 0){
+    }
+    if (row < maxRows - 1 && col < maxCols - 2 && board[row+1][col+2] == 0){
       int[] move = new int[2];
       move[0] = row+1;
       move[1] = col+2;
       blocks.add(move);
       index++;
-    } else if (row > 0 && col < maxCols - 2 && board[row-1][col+2] == 0){
+    }
+    if (row > 0 && col < maxCols - 2 && board[row-1][col+2] == 0){
       int[] move = new int[2];
       move[0] = row-1;
       move[1] = col+2;
       blocks.add(move);
       index++;
-    } else if (row > 1 && col > 0 && board[row-2][col-1] == 0){
+    }
+    if (row > 1 && col > 0 && board[row-2][col-1] == 0){
       int[] move = new int[2];
       move[0] = row-2;
       move[1] = col-1;
       blocks.add(move);
       index++;
-    } else if (row > 1 && col < maxCols - 1 && board[row-2][col+1] == 0){
+    }
+    if (row > 1 && col < maxCols - 1 && board[row-2][col+1] == 0){
       int[] move = new int[2];
       move[0] = row-2;
       move[1] = col+1;
       blocks.add(move);
       index++;
-    } else if (row > 0 && col > 1 && board[row-1][col-2] == 0){
+    }
+    if (row > 0 && col > 1 && board[row-1][col-2] == 0){
       int[] move = new int[2];
       move[0] = row-1;
       move[1] = col-2;
       blocks.add(move);
       index++;
-    } else if (row < maxRows - 1 && col > 1 && board[row+1][col-2] == 0){
+    }
+    if (row < maxRows - 1 && col > 1 && board[row+1][col-2] == 0){
       int[] move = new int[2];
       move[0] = row+1;
       move[1] = col-2;
@@ -119,7 +125,8 @@ public class KnightBoard{
 
   private boolean solveH(int row ,int col, int level){
     System.out.println(toString());
-    if (level > maxCols * maxRows){
+    if (level == maxCols * maxRows){
+      board[row][col] = level;
       return true;
     }
     if (board[row][col] != 0){
