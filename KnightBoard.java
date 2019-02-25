@@ -161,7 +161,6 @@ public class KnightBoard{
   }
 
   public void cSH(int row, int col, int level){
-    System.out.println(toString());
     if (level == maxCols * maxRows){
       numSolutions++;
     }
