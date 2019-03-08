@@ -1,6 +1,8 @@
 public class Driver{
   public static void main(String[] args){
-    runTest(4);
+    for (int i=0; i<=4; i++){
+      runTest(i);
+    }
   }
   //testcase must be a valid index of your input/output array
   public static void runTest(int i){
